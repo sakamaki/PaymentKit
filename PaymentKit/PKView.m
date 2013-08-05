@@ -482,6 +482,7 @@
 - (void)checkValid
 {
     if ([self isValid] && !isValidState) {
+
         isValidState = YES;
 
         if ([self.delegate respondsToSelector:@selector(paymentView:withCard:isValid:)]) {
@@ -489,10 +490,21 @@
         }
         
     } else if (![self isValid] && isValidState) {
+
         isValidState = NO;
         
         if ([self.delegate respondsToSelector:@selector(paymentView:withCard:isValid:)]) {
             [self.delegate paymentView:self withCard:self.card isValid:NO];
+        }
+    } else {
+        if ([self.delegate respondsToSelector:@selector(paymentView:withCard:changedInputKind:)]) {
+            if ([self.cardExpiry isValid]) {
+                [self.delegate paymentView:self withCard:self.card changedInputKind:IMPUT_CARD_DATA_KIND_CVC];
+            } else if ([self.cardNumber isValid]) {
+                [self.delegate paymentView:self withCard:self.card changedInputKind:IMPUT_CARD_DATA_KIND_EXPIRY];
+            } else {
+                [self.delegate paymentView:self withCard:self.card changedInputKind:IMPUT_CARD_DATA_KIND_NUMBER];
+            }
         }
     }
 }
