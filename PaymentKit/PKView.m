@@ -13,19 +13,30 @@
 
 #define kPKViewPlaceholderViewAnimationDuration 0.25
 
+//#define kPKViewCardExpiryFieldStartX 84 + 200
+//#define kPKViewCardCVCFieldStartX 177 + 200
+
+//#define kPKViewCardExpiryFieldEndX 84
+//#define kPKViewCardCVCFieldEndX 177
+#define kPKViewCardNumberFieldStartX 220
 #define kPKViewCardExpiryFieldStartX 84 + 200
 #define kPKViewCardCVCFieldStartX 177 + 200
 
+#define kPKViewCardNumberFieldEndX 12
 #define kPKViewCardExpiryFieldEndX 84
 #define kPKViewCardCVCFieldEndX 177
 
 #import <QuartzCore/QuartzCore.h>
+#import <BlocksKit/NSObject+BlockObservation.h>
 #import "PKView.h"
 #import "PKTextField.h"
+#import "PKCardName.h"
+#import "UIView+MyExtension.h"
 
 @interface PKView () <UITextFieldDelegate> {
 @private
     BOOL isInitialState;
+    BOOL isNumberState;
     BOOL isValidState;
 }
 
@@ -34,8 +45,9 @@
 - (void)setupCardNumberField;
 - (void)setupCardExpiryField;
 - (void)setupCardCVCField;
+- (void)setupCardNameField;
 
-- (void)stateCardNumber;
+- (void)stateCardName;
 - (void)stateMeta;
 - (void)stateCardCVC;
 
@@ -57,7 +69,7 @@
 
 @synthesize innerView, opaqueOverGradientView, cardNumberField,
             cardExpiryField, cardCVCField,
-            placeholderView, delegate;
+            placeholderView, delegate, cardNameField;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -77,6 +89,7 @@
 - (void)setup
 {
     isInitialState = YES;
+    isNumberState = NO;
     isValidState   = NO;
     
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, 290, 46);
@@ -91,12 +104,14 @@
     self.innerView.clipsToBounds = YES;
     
     [self setupPlaceholderView];
+    [self setupCardNameField];
     [self setupCardNumberField];
     [self setupCardExpiryField];
     [self setupCardCVCField];
     
-    [self.innerView addSubview:cardNumberField];
-    
+//    [self.innerView addSubview:cardNumberField];
+    [self.innerView addSubview:cardNameField];
+
     UIImageView *gradientImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 12, 34)];
     gradientImageView.image = [UIImage imageNamed:@"gradient"];
     [self.innerView addSubview:gradientImageView];
@@ -109,8 +124,8 @@
     
     [self addSubview:self.innerView];
     [self addSubview:placeholderView];
-    
-    [self stateCardNumber];
+
+    [self stateCardName];
 }
 
 
@@ -126,9 +141,25 @@
     [placeholderView.layer addSublayer:clip];
 }
 
+- (void)setupCardNameField
+{
+    cardNameField = [[PKTextField alloc] initWithFrame:CGRectMake(12,3,220,20)];
+
+    cardNameField.delegate = self;
+
+    cardNameField.placeholder = @"LENSY TARO";
+    cardNameField.keyboardType = UIKeyboardTypeASCIICapable;
+    cardNameField.returnKeyType = UIReturnKeyNext;
+    cardNameField.autocorrectionType = UITextAutocorrectionTypeNo;
+    cardNameField.textColor = DarkGreyColor;
+    cardNameField.font = [UIFont fontWithName:@"Marion-Bold" size:18.0f];
+
+    [cardNameField.layer setMasksToBounds:YES];
+}
+
 - (void)setupCardNumberField
 {
-    cardNumberField = [[PKTextField alloc] initWithFrame:CGRectMake(12,0,170,20)];
+    cardNumberField = [[PKTextField alloc] initWithFrame:CGRectMake(kPKViewCardNumberFieldStartX,0,170,20)];
     
     cardNumberField.delegate = self;
     
@@ -142,8 +173,7 @@
 
 - (void)setupCardExpiryField
 {
-    cardExpiryField = [[PKTextField alloc] initWithFrame:CGRectMake(kPKViewCardExpiryFieldStartX,0,
-                                                                    60,20)];
+    cardExpiryField = [[PKTextField alloc] initWithFrame:CGRectMake(kPKViewCardExpiryFieldStartX,0,60,20)];
 
     cardExpiryField.delegate = self;
     
@@ -172,6 +202,11 @@
 
 // Accessors
 
+- (PKCardName *)cardName
+{
+    return [PKCardName cardNameWithString:cardNameField.text];
+}
+
 - (PKCardNumber*)cardNumber
 {
     return [PKCardNumber cardNumberWithString:cardNumberField.text];
@@ -189,7 +224,7 @@
 
 // State
 
-- (void)stateCardNumber
+- (void)stateCardName
 {
     if (!isInitialState) {
         // Animate left
@@ -203,25 +238,72 @@
                               delay:0
                             options:(UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionAllowUserInteraction)
                          animations:^{
-                             cardExpiryField.frame = CGRectMake(kPKViewCardExpiryFieldStartX,
+                             cardExpiryField.frame = CGRectMake(kPKViewCardExpiryFieldStartX + 220,
                                                                 cardExpiryField.frame.origin.y,
                                                                 cardExpiryField.frame.size.width,
                                                                 cardExpiryField.frame.size.height);
-                             cardCVCField.frame = CGRectMake(kPKViewCardCVCFieldStartX,
+                             cardCVCField.frame = CGRectMake(kPKViewCardCVCFieldStartX + 220,
                                                              cardCVCField.frame.origin.y,
                                                              cardCVCField.frame.size.width,
                                                              cardCVCField.frame.size.height);
-                             cardNumberField.frame = CGRectMake(12,
+                             cardNumberField.frame = CGRectMake(kPKViewCardNumberFieldStartX,
                                                                 cardNumberField.frame.origin.y,
                                                                 cardNumberField.frame.size.width,
                                                                 cardNumberField.frame.size.height);
+                             cardNameField.frame = CGRectMake(12,
+                                     cardNameField.frame.origin.y,
+                                     cardNameField.frame.size.width,
+                                     cardNameField.frame.size.height);
+                         }
+                         completion:^(BOOL completed) {
+                             [cardNumberField removeFromSuperview];
+                             [cardExpiryField removeFromSuperview];
+                             [cardCVCField removeFromSuperview];
+                         }];
+    }
+    
+    [self notifyCreditCardLabel:INPUT_CARD_DATA_KIND_NAME];
+    [cardNameField becomeFirstResponder];
+}
+
+- (void)stateCardNumber
+{
+    if (!isNumberState) {
+        // Animate left
+        isNumberState = YES;
+
+        [UIView animateWithDuration:0.05 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+                animations:^{
+                    opaqueOverGradientView.alpha = 0.0;
+                } completion:^(BOOL finished) {}];
+        [UIView animateWithDuration:0.400
+                              delay:0
+                            options:(UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionAllowUserInteraction)
+                         animations:^{
+                             cardExpiryField.frame = CGRectMake(kPKViewCardExpiryFieldStartX,
+                                     cardExpiryField.frame.origin.y,
+                                     cardExpiryField.frame.size.width,
+                                     cardExpiryField.frame.size.height);
+                             cardCVCField.frame = CGRectMake(kPKViewCardCVCFieldStartX,
+                                     cardCVCField.frame.origin.y,
+                                     cardCVCField.frame.size.width,
+                                     cardCVCField.frame.size.height);
+                             cardNumberField.frame = CGRectMake(12,
+                                     cardNumberField.frame.origin.y,
+                                     cardNumberField.frame.size.width,
+                                     cardNumberField.frame.size.height);
+                             cardNameField.frame = CGRectMake(- cardNameField.width,
+                                     cardNameField.frame.origin.y,
+                                     cardNameField.frame.size.width,
+                                     cardNameField.frame.size.height);
                          }
                          completion:^(BOOL completed) {
                              [cardExpiryField removeFromSuperview];
                              [cardCVCField removeFromSuperview];
                          }];
     }
-    
+
+    [self notifyCreditCardLabel:INPUT_CARD_DATA_KIND_NUMBER];
     [self.cardNumberField becomeFirstResponder];
 }
 
@@ -229,49 +311,76 @@
 {
     isInitialState = NO;
     
-    CGSize cardNumberSize = [self.cardNumber.formattedString sizeWithFont:DefaultBoldFont];
-    CGSize lastGroupSize = [self.cardNumber.lastGroup sizeWithFont:DefaultBoldFont];
-    CGFloat frameX = self.cardNumberField.frame.origin.x - (cardNumberSize.width - lastGroupSize.width);
-    
     [UIView animateWithDuration:0.05 delay:0.35 options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          opaqueOverGradientView.alpha = 1.0;
                      } completion:^(BOOL finished) {}];
     [UIView animateWithDuration:0.400 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        cardExpiryField.frame = CGRectMake(kPKViewCardExpiryFieldEndX,
-                                           cardExpiryField.frame.origin.y,
-                                           cardExpiryField.frame.size.width,
-                                           cardExpiryField.frame.size.height);
-        cardCVCField.frame = CGRectMake(kPKViewCardCVCFieldEndX,
-                                        cardCVCField.frame.origin.y,
-                                        cardCVCField.frame.size.width,
-                                        cardCVCField.frame.size.height);
-        cardNumberField.frame = CGRectMake(frameX,
+        cardNumberField.frame = CGRectMake(kPKViewCardNumberFieldEndX,
                                            cardNumberField.frame.origin.y,
                                            cardNumberField.frame.size.width,
                                            cardNumberField.frame.size.height);
+        cardNameField.frame = CGRectMake(- cardNameField.width,
+                                           cardNameField.frame.origin.y,
+                                           cardNameField.frame.size.width,
+                                           cardNameField.frame.size.height);
     } completion:nil];
     
     [self addSubview:placeholderView];
+    [self.innerView addSubview:cardNumberField];
+    [self notifyCreditCardLabel:INPUT_CARD_DATA_KIND_NUMBER];
+    [cardNumberField becomeFirstResponder];
+}
+
+- (void)stateMeta2
+{
+    isNumberState = NO;
+
+    CGSize cardNumberSize = [self.cardNumber.formattedString sizeWithFont:DefaultBoldFont];
+    CGSize lastGroupSize = [self.cardNumber.lastGroup sizeWithFont:DefaultBoldFont];
+    CGFloat frameX = self.cardNumberField.frame.origin.x - (cardNumberSize.width - lastGroupSize.width) - cardNameField.width;
+    DLog(@"frameX:%f", frameX);
+
+    [UIView animateWithDuration:0.05 delay:0.35 options:UIViewAnimationOptionCurveEaseInOut
+            animations:^{
+                opaqueOverGradientView.alpha = 1.0;
+            } completion:^(BOOL finished) {}];
+    [UIView animateWithDuration:0.400 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        cardExpiryField.frame = CGRectMake(kPKViewCardExpiryFieldEndX,
+                cardExpiryField.frame.origin.y,
+                cardExpiryField.frame.size.width,
+                cardExpiryField.frame.size.height);
+        cardCVCField.frame = CGRectMake(kPKViewCardCVCFieldEndX,
+                cardCVCField.frame.origin.y,
+                cardCVCField.frame.size.width,
+                cardCVCField.frame.size.height);
+        cardNumberField.frame = CGRectMake(frameX,
+                cardNumberField.frame.origin.y,
+                cardNumberField.frame.size.width,
+                cardNumberField.frame.size.height);
+    } completion:nil];
+
     [self.innerView addSubview:cardExpiryField];
     [self.innerView addSubview:cardCVCField];
+    [self notifyCreditCardLabel:INPUT_CARD_DATA_KIND_EXPIRY];
     [cardExpiryField becomeFirstResponder];
 }
 
 - (void)stateCardCVC
 {
+    [self notifyCreditCardLabel:INPUT_CARD_DATA_KIND_CVC];
     [cardCVCField becomeFirstResponder];
 }
 
 - (BOOL)isValid
 {    
-    return [self.cardNumber isValid] && [self.cardExpiry isValid] &&
-           [self.cardCVC isValid];
+    return [self.cardName isValid] && [self.cardNumber isValid] && [self.cardExpiry isValid] && [self.cardCVC isValid];
 }
 
 - (PKCard*)card
 {
     PKCard* card    = [[PKCard alloc] init];
+    card.name       = [self.cardName string];
     card.number     = [self.cardNumber string];
     card.cvc        = [self.cardCVC string];
     card.expMonth   = [self.cardExpiry month];
@@ -363,14 +472,28 @@
     } else {
         [self setPlaceholderToCardType];
     }
-    
-    if ([textField isEqual:cardNumberField] && !isInitialState) {
+    if ([textField isEqual:cardNumberField] && !isNumberState) {
         [self stateCardNumber];
+    }
+    if ([textField isEqual:cardNameField]) {
+        cardNameField.text = [cardNameField.text uppercaseString];
+    }
+    if ([textField isEqual:cardNameField] && !isInitialState) {
+        [self stateCardName];
     }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacementString
 {
+    if ([textField isEqual:cardNameField]) {
+        if (0 == replacementString.length) {
+            return YES;
+        } else {
+            cardNameField.text = [NSString stringWithFormat:@"%@%@", cardNameField.text, [replacementString uppercaseString]] ;
+            return NO;
+        }
+    }
+
     if ([textField isEqual:cardNumberField]) {
         return [self cardNumberFieldShouldChangeCharactersInRange:range replacementString:replacementString];
     }
@@ -386,12 +509,24 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([textField isEqual:cardNameField] && [self.cardName isValid]) {
+        [self stateMeta];
+    }
+    return YES;
+}
+
 - (void)pkTextFieldDidBackSpaceWhileTextIsEmpty:(PKTextField *)textField
 {
-    if (textField == self.cardCVCField)
+    if (textField == self.cardCVCField) {
+        [self notifyCreditCardLabel:INPUT_CARD_DATA_KIND_EXPIRY];
         [self.cardExpiryField becomeFirstResponder];
-    else if (textField == self.cardExpiryField)
-        [self stateCardNumber];
+    } else if (textField == self.cardExpiryField) {
+        [self notifyCreditCardLabel:INPUT_CARD_DATA_KIND_NUMBER];
+        [self.cardNumberField becomeFirstResponder];
+    } else if (textField == self.cardNumberField) {
+        [self stateCardName];
+    }
 }
 
 - (BOOL)cardNumberFieldShouldChangeCharactersInRange: (NSRange)range replacementString:(NSString *)replacementString
@@ -413,8 +548,8 @@
     
     if ([cardNumber isValid]) {
         [self textFieldIsValid:cardNumberField];
-        [self stateMeta];
-        
+        [self stateMeta2];
+
     } else if ([cardNumber isValidLength] && ![cardNumber isValidLuhn]) {
         [self textFieldIsInvalid:cardNumberField withErrors:YES];
         
@@ -496,16 +631,38 @@
         if ([self.delegate respondsToSelector:@selector(paymentView:withCard:isValid:)]) {
             [self.delegate paymentView:self withCard:self.card isValid:NO];
         }
-    } else {
+    }
+    /*
+    else {
         if ([self.delegate respondsToSelector:@selector(paymentView:withCard:changedInputKind:)]) {
             if ([self.cardExpiry isValid]) {
                 [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_CVC];
             } else if ([self.cardNumber isValid]) {
                 [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_EXPIRY];
-            } else {
+            } else if ([self.cardName isValid]){
                 [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NUMBER];
+            } else {
+                [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NAME];
             }
         }
+    }
+    */
+}
+
+- (void)notifyCreditCardLabel:(INPUT_CARD_DATA_KIND)kind {
+    if ([self.delegate respondsToSelector:@selector(paymentView:withCard:changedInputKind:)]) {
+        [self.delegate paymentView:self withCard:self.card changedInputKind:kind];
+        /*
+        if ([self.cardExpiry isValid]) {
+            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_CVC];
+        } else if ([self.cardNumber isValid]) {
+            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_EXPIRY];
+        } else if ([self.cardName isValid]){
+            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NUMBER];
+        } else {
+            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NAME];
+        }
+        */
     }
 }
 

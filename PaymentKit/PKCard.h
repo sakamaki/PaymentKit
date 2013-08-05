@@ -10,6 +10,7 @@
 
 @interface PKCard : NSObject
 
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *number;
 @property (nonatomic, copy) NSString *cvc;
 @property (nonatomic, copy) NSString *addressZip;

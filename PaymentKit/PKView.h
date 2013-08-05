@@ -15,8 +15,10 @@
 #import "PKUSAddressZip.h"
 
 @class PKView, PKTextField;
+@class PKCardName;
 
 typedef enum {
+    INPUT_CARD_DATA_KIND_NAME,
     INPUT_CARD_DATA_KIND_NUMBER,
     INPUT_CARD_DATA_KIND_EXPIRY,
     INPUT_CARD_DATA_KIND_CVC,
@@ -25,14 +27,16 @@ typedef enum {
 @protocol PKViewDelegate <NSObject>
 @optional
 - (void) paymentView:(PKView*)paymentView withCard:(PKCard*)card isValid:(BOOL)valid;
-- (void)paymentView:(PKView *)paymentView withCard:(PKCard *)card changedInputKind:(INPUT_CARD_DATA_KIND)changedInputKind;
+- (void) paymentView:(PKView *)paymentView withCard:(PKCard *)card changedInputKind:(INPUT_CARD_DATA_KIND)changedInputKind;
 @end
 
 @interface PKView : UIView
 
+
 - (BOOL)isValid;
 
 @property (nonatomic, readonly) UIView *opaqueOverGradientView;
+@property (nonatomic, readonly) PKCardName * cardName;
 @property (nonatomic, readonly) PKCardNumber* cardNumber;
 @property (nonatomic, readonly) PKCardExpiry* cardExpiry;
 @property (nonatomic, readonly) PKCardCVC* cardCVC;
@@ -40,6 +44,7 @@ typedef enum {
 
 @property IBOutlet UIView* innerView;
 @property IBOutlet UIView* clipView;
+@property IBOutlet PKTextField* cardNameField;
 @property IBOutlet PKTextField* cardNumberField;
 @property IBOutlet PKTextField* cardExpiryField;
 @property IBOutlet PKTextField* cardCVCField;

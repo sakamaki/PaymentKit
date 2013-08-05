@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38BC868E17AF90C500774793 /* PKName.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC868D17AF90C500774793 /* PKName.m */; };
 		4C332B4316FA5297009C782D /* textfield.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C332B4116FA5297009C782D /* textfield.png */; };
 		4C332B4416FA5297009C782D /* textfield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C332B4216FA5297009C782D /* textfield@2x.png */; };
 		4C332B4B16FA6240009C782D /* gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C332B4A16FA6240009C782D /* gradient@2x.png */; };
@@ -65,6 +66,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		38BC868C17AF90C500774793 /* PKName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKName.h; sourceTree = "<group>"; };
+		38BC868D17AF90C500774793 /* PKName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKName.m; sourceTree = "<group>"; };
 		4C332B4116FA5297009C782D /* textfield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textfield.png; sourceTree = "<group>"; };
 		4C332B4216FA5297009C782D /* textfield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textfield@2x.png"; sourceTree = "<group>"; };
 		4C332B4A16FA6240009C782D /* gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient@2x.png"; sourceTree = "<group>"; };
@@ -72,7 +75,7 @@
 		4C332B4D16FA923E009C782D /* PKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKTextField.m; sourceTree = "<group>"; };
 		FA06D14A16AFC0AA00C46291 /* PKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKView.h; sourceTree = "<group>"; };
 		FA06D14B16AFC0AA00C46291 /* PKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKView.m; sourceTree = "<group>"; };
-		FA2A749E16BB1EDD00AF0078 /* PKCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCard.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FA2A749E16BB1EDD00AF0078 /* PKCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCard.h; sourceTree = "<group>"; };
 		FA2A749F16BB1EDD00AF0078 /* PKCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCard.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FA3A8C5816D208E300A9C346 /* PKUSAddressZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKUSAddressZip.h; sourceTree = "<group>"; };
 		FA3A8C5916D208E300A9C346 /* PKUSAddressZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKUSAddressZip.m; sourceTree = "<group>"; };
@@ -92,10 +95,10 @@
 		FA45AC8816AE350E0003A41D /* PaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PaymentViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FA45AC8916AE350E0003A41D /* PaymentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PaymentViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FA45AC8C16AE350E0003A41D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PaymentViewController.xib; sourceTree = "<group>"; };
-		FA45ACA216AF1EE80003A41D /* PKCardNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCardNumber.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		FA45ACA316AF1EE80003A41D /* PKCardNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCardNumber.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		FA45ACA516AF33750003A41D /* PKCardCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCardCVC.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		FA45ACA616AF33750003A41D /* PKCardCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCardCVC.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		FA45ACA216AF1EE80003A41D /* PKCardNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCardNumber.h; sourceTree = "<group>"; };
+		FA45ACA316AF1EE80003A41D /* PKCardNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCardNumber.m; sourceTree = "<group>"; };
+		FA45ACA516AF33750003A41D /* PKCardCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCardCVC.h; sourceTree = "<group>"; };
+		FA45ACA616AF33750003A41D /* PKCardCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCardCVC.m; sourceTree = "<group>"; };
 		FA45ACA916AF367B0003A41D /* PKCardType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCardType.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FA45ACAA16AF37420003A41D /* PKCardExpiry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCardExpiry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FA45ACAB16AF37420003A41D /* PKCardExpiry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCardExpiry.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -239,6 +242,8 @@
 			isa = PBXGroup;
 			children = (
 				FAA360F416C9F21C00049C6F /* Resources */,
+				38BC868C17AF90C500774793 /* PKName.h */,
+				38BC868D17AF90C500774793 /* PKName.m */,
 				FA45ACA216AF1EE80003A41D /* PKCardNumber.h */,
 				FA45ACA316AF1EE80003A41D /* PKCardNumber.m */,
 				FA45ACA516AF33750003A41D /* PKCardCVC.h */,
@@ -465,6 +470,7 @@
 				FA6F1A5E16C1B21000835C75 /* ViewController.m in Sources */,
 				FA3A8C5A16D208E300A9C346 /* PKUSAddressZip.m in Sources */,
 				4C332B4E16FA923E009C782D /* PKTextField.m in Sources */,
+				38BC868E17AF90C500774793 /* PKName.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

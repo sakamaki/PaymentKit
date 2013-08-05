@@ -10,7 +10,7 @@
 
 @implementation PKCard
 
-@synthesize number, cvc, expMonth, expYear, addressZip;
+@synthesize name, number, cvc, expMonth, expYear, addressZip;
 
 - (NSString*)last4
 {
