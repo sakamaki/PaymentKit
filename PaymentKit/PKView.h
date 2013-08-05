@@ -17,15 +17,15 @@
 @class PKView, PKTextField;
 
 typedef enum {
-    IMPUT_CARD_DATA_KIND_NUMBER,
-    IMPUT_CARD_DATA_KIND_EXPIRY,
-    IMPUT_CARD_DATA_KIND_CVC,
-} IMPUT_CARD_DATA_KIND;
+    INPUT_CARD_DATA_KIND_NUMBER,
+    INPUT_CARD_DATA_KIND_EXPIRY,
+    INPUT_CARD_DATA_KIND_CVC,
+} INPUT_CARD_DATA_KIND;
 
 @protocol PKViewDelegate <NSObject>
 @optional
 - (void) paymentView:(PKView*)paymentView withCard:(PKCard*)card isValid:(BOOL)valid;
-- (void)paymentView:(PKView *)paymentView withCard:(PKCard *)card changedInputKind:(IMPUT_CARD_DATA_KIND)changedInputKind;
+- (void)paymentView:(PKView *)paymentView withCard:(PKCard *)card changedInputKind:(INPUT_CARD_DATA_KIND)changedInputKind;
 @end
 
 @interface PKView : UIView
