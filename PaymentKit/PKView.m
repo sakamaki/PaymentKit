@@ -35,9 +35,10 @@
 
 @interface PKView () <UITextFieldDelegate> {
 @private
-    BOOL isInitialState;
+    BOOL isNameState;
     BOOL isNumberState;
     BOOL isValidState;
+    BOOL isStateCardNameWorking;
 }
 
 - (void)setup;
@@ -88,9 +89,10 @@
 
 - (void)setup
 {
-    isInitialState = YES;
+    isNameState = YES;
     isNumberState = NO;
     isValidState   = NO;
+    isStateCardNameWorking = NO;
     
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, 290, 46);
     self.backgroundColor = [UIColor clearColor];
@@ -226,10 +228,11 @@
 
 - (void)stateCardName
 {
-    if (!isInitialState) {
+    if (!isNameState) {
         // Animate left
-        isInitialState = YES;
-        
+        isNameState = YES;
+        isStateCardNameWorking = YES;
+
         [UIView animateWithDuration:0.05 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
                              opaqueOverGradientView.alpha = 0.0;
@@ -256,6 +259,7 @@
                                      cardNameField.frame.size.height);
                          }
                          completion:^(BOOL completed) {
+                             isStateCardNameWorking = NO;
                              [cardNumberField removeFromSuperview];
                              [cardExpiryField removeFromSuperview];
                              [cardCVCField removeFromSuperview];
@@ -309,7 +313,7 @@
 
 - (void)stateMeta
 {
-    isInitialState = NO;
+    isNameState = NO;
     
     [UIView animateWithDuration:0.05 delay:0.35 options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
@@ -478,7 +482,7 @@
     if ([textField isEqual:cardNameField]) {
         cardNameField.text = [cardNameField.text uppercaseString];
     }
-    if ([textField isEqual:cardNameField] && !isInitialState) {
+    if ([textField isEqual:cardNameField] && !isNameState) {
         [self stateCardName];
     }
 }
@@ -509,8 +513,9 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if ([textField isEqual:cardNameField] && [self.cardName isValid]) {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (!isStateCardNameWorking && [textField isEqual:cardNameField] && [self.cardName isValid]) {
         [self stateMeta];
     }
     return YES;
@@ -549,10 +554,8 @@
     if ([cardNumber isValid]) {
         [self textFieldIsValid:cardNumberField];
         [self stateMeta2];
-
     } else if ([cardNumber isValidLength] && ![cardNumber isValidLuhn]) {
         [self textFieldIsInvalid:cardNumberField withErrors:YES];
-        
     } else if (![cardNumber isValidLength]) {
         [self textFieldIsInvalid:cardNumberField withErrors:NO];
     }
@@ -632,37 +635,11 @@
             [self.delegate paymentView:self withCard:self.card isValid:NO];
         }
     }
-    /*
-    else {
-        if ([self.delegate respondsToSelector:@selector(paymentView:withCard:changedInputKind:)]) {
-            if ([self.cardExpiry isValid]) {
-                [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_CVC];
-            } else if ([self.cardNumber isValid]) {
-                [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_EXPIRY];
-            } else if ([self.cardName isValid]){
-                [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NUMBER];
-            } else {
-                [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NAME];
-            }
-        }
-    }
-    */
 }
 
 - (void)notifyCreditCardLabel:(INPUT_CARD_DATA_KIND)kind {
     if ([self.delegate respondsToSelector:@selector(paymentView:withCard:changedInputKind:)]) {
         [self.delegate paymentView:self withCard:self.card changedInputKind:kind];
-        /*
-        if ([self.cardExpiry isValid]) {
-            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_CVC];
-        } else if ([self.cardNumber isValid]) {
-            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_EXPIRY];
-        } else if ([self.cardName isValid]){
-            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NUMBER];
-        } else {
-            [self.delegate paymentView:self withCard:self.card changedInputKind:INPUT_CARD_DATA_KIND_NAME];
-        }
-        */
     }
 }
 
