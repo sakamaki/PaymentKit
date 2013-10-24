@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		38BC868E17AF90C500774793 /* PKName.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC868D17AF90C500774793 /* PKName.m */; };
+		381ECFC117B5D19D007CF4E1 /* PKCardName.m in Sources */ = {isa = PBXBuildFile; fileRef = 381ECFBF17B5D17A007CF4E1 /* PKCardName.m */; };
 		4C332B4316FA5297009C782D /* textfield.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C332B4116FA5297009C782D /* textfield.png */; };
 		4C332B4416FA5297009C782D /* textfield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C332B4216FA5297009C782D /* textfield@2x.png */; };
 		4C332B4B16FA6240009C782D /* gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C332B4A16FA6240009C782D /* gradient@2x.png */; };
@@ -66,8 +66,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		38BC868C17AF90C500774793 /* PKName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKName.h; sourceTree = "<group>"; };
-		38BC868D17AF90C500774793 /* PKName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKName.m; sourceTree = "<group>"; };
+		381ECFBE17B5D17A007CF4E1 /* PKCardName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCardName.h; sourceTree = "<group>"; };
+		381ECFBF17B5D17A007CF4E1 /* PKCardName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCardName.m; sourceTree = "<group>"; };
 		4C332B4116FA5297009C782D /* textfield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textfield.png; sourceTree = "<group>"; };
 		4C332B4216FA5297009C782D /* textfield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textfield@2x.png"; sourceTree = "<group>"; };
 		4C332B4A16FA6240009C782D /* gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient@2x.png"; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		FA06D14A16AFC0AA00C46291 /* PKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKView.h; sourceTree = "<group>"; };
 		FA06D14B16AFC0AA00C46291 /* PKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKView.m; sourceTree = "<group>"; };
 		FA2A749E16BB1EDD00AF0078 /* PKCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKCard.h; sourceTree = "<group>"; };
-		FA2A749F16BB1EDD00AF0078 /* PKCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCard.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		FA2A749F16BB1EDD00AF0078 /* PKCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKCard.m; sourceTree = "<group>"; };
 		FA3A8C5816D208E300A9C346 /* PKUSAddressZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKUSAddressZip.h; sourceTree = "<group>"; };
 		FA3A8C5916D208E300A9C346 /* PKUSAddressZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKUSAddressZip.m; sourceTree = "<group>"; };
 		FA45AC6C16AE350D0003A41D /* PaymentKit Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PaymentKit Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +138,7 @@
 		FAA3610616C9F21C00049C6F /* visa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visa.png; sourceTree = "<group>"; };
 		FAA3610716C9F21C00049C6F /* visa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visa@2x.png"; sourceTree = "<group>"; };
 		FAADE6CD16BC44D9006FF4D1 /* PKAddressZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PKAddressZip.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		FAADE6CE16BC44D9006FF4D1 /* PKAddressZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKAddressZip.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		FAADE6CE16BC44D9006FF4D1 /* PKAddressZip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PKAddressZip.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,8 +242,6 @@
 			isa = PBXGroup;
 			children = (
 				FAA360F416C9F21C00049C6F /* Resources */,
-				38BC868C17AF90C500774793 /* PKName.h */,
-				38BC868D17AF90C500774793 /* PKName.m */,
 				FA45ACA216AF1EE80003A41D /* PKCardNumber.h */,
 				FA45ACA316AF1EE80003A41D /* PKCardNumber.m */,
 				FA45ACA516AF33750003A41D /* PKCardCVC.h */,
@@ -261,6 +259,8 @@
 				FA3A8C5916D208E300A9C346 /* PKUSAddressZip.m */,
 				4C332B4C16FA923E009C782D /* PKTextField.h */,
 				4C332B4D16FA923E009C782D /* PKTextField.m */,
+				381ECFBE17B5D17A007CF4E1 /* PKCardName.h */,
+				381ECFBF17B5D17A007CF4E1 /* PKCardName.m */,
 			);
 			name = PaymentKit;
 			path = ../PaymentKit;
@@ -470,7 +470,7 @@
 				FA6F1A5E16C1B21000835C75 /* ViewController.m in Sources */,
 				FA3A8C5A16D208E300A9C346 /* PKUSAddressZip.m in Sources */,
 				4C332B4E16FA923E009C782D /* PKTextField.m in Sources */,
-				38BC868E17AF90C500774793 /* PKName.m in Sources */,
+				381ECFC117B5D19D007CF4E1 /* PKCardName.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

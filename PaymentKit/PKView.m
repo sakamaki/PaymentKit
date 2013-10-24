@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Stripe. All rights reserved.
 //
 
-#define RGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
+//#define RGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
 #define DarkGreyColor RGB(0,0,0)
 #define RedColor RGB(253,0,17)
 #define DefaultBoldFont [UIFont boldSystemFontOfSize:17]
@@ -18,6 +18,7 @@
 
 //#define kPKViewCardExpiryFieldEndX 84
 //#define kPKViewCardCVCFieldEndX 177
+
 #define kPKViewCardNumberFieldStartX 220
 #define kPKViewCardExpiryFieldStartX 84 + 200
 #define kPKViewCardCVCFieldStartX 177 + 200
@@ -27,7 +28,6 @@
 #define kPKViewCardCVCFieldEndX 177
 
 #import <QuartzCore/QuartzCore.h>
-#import <BlocksKit/NSObject+BlockObservation.h>
 #import "PKView.h"
 #import "PKTextField.h"
 #import "PKCardName.h"
@@ -487,13 +487,21 @@
     }
 }
 
+
+- (BOOL)isCardNameValid:(NSString *)cardName {
+    NSPredicate *regex = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"[A-Za-z ]"];
+    return [regex evaluateWithObject:cardName];
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacementString
 {
     if ([textField isEqual:cardNameField]) {
         if (0 == replacementString.length) {
             return YES;
         } else {
-            cardNameField.text = [NSString stringWithFormat:@"%@%@", cardNameField.text, [replacementString uppercaseString]] ;
+            if ([self isCardNameValid:[replacementString uppercaseString]]) {
+                cardNameField.text = [NSString stringWithFormat:@"%@%@", cardNameField.text, [replacementString uppercaseString]] ;
+            }
             return NO;
         }
     }
@@ -505,17 +513,21 @@
     if ([textField isEqual:cardExpiryField]) {
         return [self cardExpiryShouldChangeCharactersInRange:range replacementString:replacementString];
     }
-    
+
     if ([textField isEqual:cardCVCField]) {
         return [self cardCVCShouldChangeCharactersInRange:range replacementString:replacementString];
     }
-    
+
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (!isStateCardNameWorking && [textField isEqual:cardNameField] && [self.cardName isValid]) {
+    if ([self isValid]) {
+        if ([self.delegate respondsToSelector:@selector(paymentView:withCard:isValid:)]) {
+            [self.delegate paymentView:self withCard:self.card isValid:YES];
+        }
+    } else if (!isStateCardNameWorking && [textField isEqual:cardNameField] && [self.cardName isValid]) {
         [self stateMeta];
     }
     return YES;
@@ -539,7 +551,7 @@
     NSString *resultString = [cardNumberField.text stringByReplacingCharactersInRange:range withString:replacementString];
     resultString = [PKTextField textByRemovingUselessSpacesFromString:resultString];
     PKCardNumber *cardNumber = [PKCardNumber cardNumberWithString:resultString];
-    
+
     if ( ![cardNumber isPartiallyValid] )
         return NO;
     

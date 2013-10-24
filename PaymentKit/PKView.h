@@ -35,6 +35,8 @@ typedef enum {
 
 - (BOOL)isValid;
 
+- (void)notifyCreditCardLabel:(INPUT_CARD_DATA_KIND)kind;
+
 @property (nonatomic, readonly) UIView *opaqueOverGradientView;
 @property (nonatomic, readonly) PKCardName * cardName;
 @property (nonatomic, readonly) PKCardNumber* cardNumber;
