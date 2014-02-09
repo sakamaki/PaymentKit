@@ -14,6 +14,8 @@
 #import "PKAddressZip.h"
 #import "PKUSAddressZip.h"
 
+static NSString *const NOTIFY_CHANGE_PKTextField = @"NOTIFY_CHANGE_PKTextField";
+
 @class PKView, PKTextField;
 @class PKCardName;
 

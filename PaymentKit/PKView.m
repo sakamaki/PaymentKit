@@ -77,8 +77,29 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self
+                   selector:@selector(changeTextField:)
+                       name:NOTIFY_CHANGE_PKTextField
+                     object:nil];
     }
     return self;
+}
+
+- (void)changeTextField:(NSNotification *)notify {
+    NSNumber *index = [notify object];
+    switch (index.integerValue) {
+        case 0:
+            break;
+        case 1:
+            [self stateMeta];
+            break;
+        case 2:
+            [self stateMeta2];
+            break;
+        default: break;
+    }
+
 }
 
 - (void)awakeFromNib
@@ -110,7 +131,7 @@
     [self setupCardNumberField];
     [self setupCardExpiryField];
     [self setupCardCVCField];
-    
+
 //    [self.innerView addSubview:cardNumberField];
     [self.innerView addSubview:cardNameField];
 
@@ -480,7 +501,12 @@
         [self stateCardNumber];
     }
     if ([textField isEqual:cardNameField]) {
-        cardNameField.text = [cardNameField.text uppercaseString];
+        if ([PKTextField textByRemovingUselessSpacesFromString:cardNameField.text].length == 0) {
+            cardNameField.text = @"";
+        }
+        else {
+            cardNameField.text = [cardNameField.text uppercaseString];
+        }
     }
     if ([textField isEqual:cardNameField] && !isNameState) {
         [self stateCardName];

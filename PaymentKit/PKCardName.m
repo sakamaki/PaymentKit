@@ -7,6 +7,7 @@
 //
 
 #import "PKCardName.h"
+#import "PKTextField.h"
 
 @implementation PKCardName {
 @private
@@ -18,7 +19,7 @@
     self = [super init];
     if (self) {
         // Strip non-digits
-        userName = [string uppercaseString];
+        userName = [[PKTextField textByRemovingUselessSpacesFromString:string ] uppercaseString];
     }
     return self;
 }
@@ -34,7 +35,7 @@
 }
 
 - (BOOL)isValid {
-    if (0 < userName.length)
+    if (0 < [PKTextField textByRemovingUselessSpacesFromString:userName].length)
         return YES;
     else
         return NO;
