@@ -409,7 +409,7 @@
 
 - (BOOL)isValid
 {
-    return [self.cardName isValid] && [self.cardNumber isValid] && [self.cardExpiry isValid] && [self.cardCVC isValid];
+    return [self.cardName isValid] && [self.cardNumber isValid] && [self.cardExpiry isValid] && [self.cardCVC isValidWithType:self.cardNumber.cardType];
 }
 
 - (PKCard *)card
