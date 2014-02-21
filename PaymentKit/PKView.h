@@ -28,7 +28,7 @@ typedef enum {
 
 @protocol PKViewDelegate <NSObject>
 @optional
-- (void) paymentView:(PKView*)paymentView withCard:(PKCard*)card isValid:(BOOL)valid;
+- (void)paymentView:(PKView *)paymentView withCard:(PKCard *)card isValid:(BOOL)valid;
 - (void) paymentView:(PKView *)paymentView withCard:(PKCard *)card changedInputKind:(INPUT_CARD_DATA_KIND)changedInputKind;
 @end
 
@@ -41,19 +41,19 @@ typedef enum {
 
 @property (nonatomic, readonly) UIView *opaqueOverGradientView;
 @property (nonatomic, readonly) PKCardName * cardName;
-@property (nonatomic, readonly) PKCardNumber* cardNumber;
-@property (nonatomic, readonly) PKCardExpiry* cardExpiry;
-@property (nonatomic, readonly) PKCardCVC* cardCVC;
-@property (nonatomic, readonly) PKAddressZip* addressZip;
+@property (nonatomic, readonly) PKCardNumber *cardNumber;
+@property (nonatomic, readonly) PKCardExpiry *cardExpiry;
+@property (nonatomic, readonly) PKCardCVC *cardCVC;
+@property (nonatomic, readonly) PKAddressZip *addressZip;
 
-@property IBOutlet UIView* innerView;
-@property IBOutlet UIView* clipView;
+@property IBOutlet UIView *innerView;
+@property IBOutlet UIView *clipView;
 @property IBOutlet PKTextField* cardNameField;
-@property IBOutlet PKTextField* cardNumberField;
-@property IBOutlet PKTextField* cardExpiryField;
-@property IBOutlet PKTextField* cardCVCField;
-@property IBOutlet UIImageView* placeholderView;
-@property id <PKViewDelegate> delegate;
-@property (readonly) PKCard* card;
+@property IBOutlet PKTextField *cardNumberField;
+@property IBOutlet PKTextField *cardExpiryField;
+@property IBOutlet PKTextField *cardCVCField;
+@property IBOutlet UIImageView *placeholderView;
+@property (nonatomic, weak) id <PKViewDelegate> delegate;
+@property (readonly) PKCard *card;
 
 @end
