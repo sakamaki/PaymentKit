@@ -168,7 +168,7 @@
 
 - (void)setupCardNameField
 {
-    self.cardNameField = [[PKTextField alloc] initWithFrame:CGRectMake(12,3,220,20)];
+    self.cardNameField = [[PKTextField alloc] initWithFrame:CGRectMake(12,0,220,20)];
 
     self.cardNameField.delegate = self;
 
@@ -177,7 +177,7 @@
     self.cardNameField.returnKeyType = UIReturnKeyNext;
     self.cardNameField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.cardNameField.textColor = DarkGreyColor;
-    self.cardNameField.font = [UIFont fontWithName:@"Marion-Bold" size:18.0f];
+    self.cardNameField.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0f];
 
     [self.cardNameField.layer setMasksToBounds:YES];
 }
